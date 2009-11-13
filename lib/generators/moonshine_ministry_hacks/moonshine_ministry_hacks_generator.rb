@@ -39,16 +39,15 @@ class MoonshineMinistryHacksGenerator < Rails::Generator::NamedBase
         m.template "config/deploy/deploy.host.rb.erb", "config/deploy/#{@host}/deploy.rb", 
           :assigns => { :host => "#{name}.#{domain}" }
         for local in [ true, false ]
-          stages << "#{@host}/#{@stage}" unless local
-          stages << "#{@host}/local/#{@stage}" if local
           for @stage in %w(prod staging dev)
+            stages << "#{@host}/#{'local/' if local}#{@stage}"
             m.template "config/deploy/moonshine_stage.yml", 
               "config/deploy/#{'local/' if local}#{@host}/#{@stage}_moonshine.yml", 
               :assigns => { :domain => domain, :host => @host, :stage => @stage, :local => local }
           end
         end
       end
-      m.template "config/deploy.rb", "config/deploy.rb", :assigns => { :stages => stages }
+      m.template "config/deploy.rb.erb", "config/deploy.rb", :assigns => { :stages => stages }
     end
   end
 end
