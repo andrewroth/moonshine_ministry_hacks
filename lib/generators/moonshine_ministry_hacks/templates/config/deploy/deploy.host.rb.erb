@@ -1,0 +1,48 @@
+server "<%= host %>", :app, :web, :db, :primary => true
+
+set :private_user, 'TODO'
+set :private_host, 'TODO'
+set :private_dir, 'TODO'
+
+# In order to facilitate copying sensitive files to the server, such
+# as certs and database.yml, the ministry hacks moonshine setup gives
+# two options:
+#
+#   a) copy sensitive files from a remote, secure locations
+# or
+#   b) use the version on the server in the shared directory
+#
+# If there are files in app/manifests/assets/private, they must be in the
+# structure specified below.  They are removed from your local computer
+# after a deploy.
+#
+# You must manually run cap download_private, it's not run as a before task,
+# but they will be deleted after deploy or deploy:setup.  If you want to
+# override the default download_private which pulls the files from a remote
+# location, you can do so by implementing it in this file.
+#
+# At the end of download_private, app/manifests/assets/private should have
+#
+# certs
+#   <domain>.cert
+#   <domain>.key
+# <site>.<stage>.<domain>
+#   database.yml
+#
+# where <stage> is one of prod, dev, staging.
+#
+# For example:
+#
+# certs
+#   campusforchrist.org
+# pulse.dev.campusforchrist.org
+#   database.yml
+# pulse.prod.campusforchrist.org
+#   database.yml
+# pulse.staging.campusforchrist.org
+#   database.yml
+# pulse.dev.campusforchrist.org
+#   database.yml
+#
+#task :download_private
+#end

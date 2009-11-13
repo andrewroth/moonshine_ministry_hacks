@@ -1,0 +1,8 @@
+load "#{File.dirname(__FILE__)}/../lib/capistrano_helper.rb"
+
+# multistage
+set :stages, %w(<%= stage.join(" ") %>)
+require 'capistrano/ext/multistage'
+
+before "deploy:setup", :upload_certs
+after "deploy:setup", :destroy_config_files
